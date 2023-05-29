@@ -82,4 +82,5 @@ public class DataShaper<T> : IDataShaper<T> where T : class
 
 		return shapedObject;
 	}
+
 }

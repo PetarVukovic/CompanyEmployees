@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Contracts;
 using Entities.Exceptions;
+using Entities.LinkModels;
 using Entities.Models;
 using Service.Contracts;
 using Shared.DataTransferObjects;
@@ -20,31 +21,34 @@ namespace Service
 		private readonly IRepositoryManager _repository;
 		private readonly ILoggerManager _logger;
 		private readonly IMapper _mapper;
-		private readonly IDataShaper<EmployeeDto> _dataShaper;
+		private readonly IEmployeeLinks _employeeLinks;
 
-		public EmployeeService(IRepositoryManager repository, ILoggerManager logger, IMapper mapper, IDataShaper<EmployeeDto> dataShaper)
+		public EmployeeService(IRepositoryManager repository, ILoggerManager logger, IMapper mapper, IEmployeeLinks employeeLinks)
 		{
 			_repository = repository;
 			_logger = logger;
 			_mapper = mapper;
-			_dataShaper = dataShaper;
+			_employeeLinks = employeeLinks;
 		}
 
-		public async Task<(IEnumerable<Entity> employees, MetaData metaData)> GetEmployeesAsync 
-			(Guid companyId, EmployeeParameters employeeParameters, bool trackChanges)
+		public async Task <(LinkResponse linkResponse, MetaData metaData)> GetEmployeesAsync 
+			(Guid companyId, LinkParameters linkParams, bool trackChanges)
 		{
-			if(!employeeParameters.ValidAgeRange)
+			if(!linkParams.EmployeeParameters.ValidAgeRange)
 				throw new MaxAgeRangeBadRequestException();
+
 
 			await CheckIfCompanyExists( companyId, trackChanges );
 
 			var employeesWithMetaData = await _repository.Employee
-			.GetEmployeesAsync( companyId, employeeParameters, trackChanges );
+			.GetEmployeesAsync( companyId, linkParams.EmployeeParameters, trackChanges );
 
 			var employeesDto =_mapper.Map<IEnumerable<EmployeeDto>>( employeesWithMetaData );
-			var shapedData = _dataShaper.ShapeData( employeesDto, employeeParameters.Fields );
 
-			return (employees:shapedData,  metaData: employeesWithMetaData.MetaData);
+			var links = _employeeLinks.TryGenerateLinks( employeesDto,linkParams.EmployeeParameters.Fields,companyId, linkParams.Context );
+
+			return (linkResponse: links, metaData: employeesWithMetaData.MetaData);
+
 		}
 
 
