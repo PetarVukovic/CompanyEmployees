@@ -1,0 +1,17 @@
+C:\Users\pvukovic\Documents\.NET KNJIGA\MyCode\CompanyEmployees\Service.Contracts\bin\Debug\net6.0\Service.Contracts.deps.json
+C:\Users\pvukovic\Documents\.NET KNJIGA\MyCode\CompanyEmployees\Service.Contracts\bin\Debug\net6.0\Service.Contracts.dll
+C:\Users\pvukovic\Documents\.NET KNJIGA\MyCode\CompanyEmployees\Service.Contracts\bin\Debug\net6.0\Service.Contracts.pdb
+C:\Users\pvukovic\Documents\.NET KNJIGA\MyCode\CompanyEmployees\Service.Contracts\obj\Debug\net6.0\Service.Contracts.csproj.AssemblyReference.cache
+C:\Users\pvukovic\Documents\.NET KNJIGA\MyCode\CompanyEmployees\Service.Contracts\obj\Debug\net6.0\Service.Contracts.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\pvukovic\Documents\.NET KNJIGA\MyCode\CompanyEmployees\Service.Contracts\obj\Debug\net6.0\Service.Contracts.AssemblyInfoInputs.cache
+C:\Users\pvukovic\Documents\.NET KNJIGA\MyCode\CompanyEmployees\Service.Contracts\obj\Debug\net6.0\Service.Contracts.AssemblyInfo.cs
+C:\Users\pvukovic\Documents\.NET KNJIGA\MyCode\CompanyEmployees\Service.Contracts\obj\Debug\net6.0\Service.Contracts.csproj.CoreCompileInputs.cache
+C:\Users\pvukovic\Documents\.NET KNJIGA\MyCode\CompanyEmployees\Service.Contracts\obj\Debug\net6.0\Service.Contracts.dll
+C:\Users\pvukovic\Documents\.NET KNJIGA\MyCode\CompanyEmployees\Service.Contracts\obj\Debug\net6.0\refint\Service.Contracts.dll
+C:\Users\pvukovic\Documents\.NET KNJIGA\MyCode\CompanyEmployees\Service.Contracts\obj\Debug\net6.0\Service.Contracts.pdb
+C:\Users\pvukovic\Documents\.NET KNJIGA\MyCode\CompanyEmployees\Service.Contracts\obj\Debug\net6.0\ref\Service.Contracts.dll
+C:\Users\pvukovic\Documents\.NET KNJIGA\MyCode\CompanyEmployees\Service.Contracts\obj\Debug\net6.0\Service.Contracts.csproj.CopyComplete
+C:\Users\pvukovic\Documents\.NET KNJIGA\MyCode\CompanyEmployees\Service.Contracts\bin\Debug\net6.0\Shared.dll
+C:\Users\pvukovic\Documents\.NET KNJIGA\MyCode\CompanyEmployees\Service.Contracts\bin\Debug\net6.0\Shared.pdb
+C:\Users\pvukovic\Documents\.NET KNJIGA\MyCode\CompanyEmployees\Service.Contracts\bin\Debug\net6.0\Entities.dll
+C:\Users\pvukovic\Documents\.NET KNJIGA\MyCode\CompanyEmployees\Service.Contracts\bin\Debug\net6.0\Entities.pdb
