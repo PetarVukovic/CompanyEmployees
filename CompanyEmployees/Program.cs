@@ -9,6 +9,7 @@ using Service.DataShaping;
 using Shared.DataTransferObjects;
 using CompanyEmployees.Presentation.ActionFilters;
 using CompanyEmployees.Utility;
+using AspNetCoreRateLimit;
 
 var builder = WebApplication.CreateBuilder( args );
 
@@ -24,6 +25,10 @@ builder.Services.ConfigureSqlContext( builder.Configuration );
 builder.Services.AddScoped<IDataShaper<EmployeeDto>,DataShaper<EmployeeDto>>();
 builder.Services.AddScoped<ValidateMediaTypeAttribute>();
 builder.Services.AddScoped<IEmployeeLinks, EmployeeLinks>();
+builder.Services.ConfigureVersioning();
+builder.Services.ConfigureResponseCaching();
+builder.Services.AddHttpCacheHeaders();
+
 
 
 
@@ -48,12 +53,19 @@ builder.Services.AddControllers( config =>
 	config.RespectBrowserAcceptHeader = true;
 	config.ReturnHttpNotAcceptable = true;
 	config.InputFormatters.Insert(0,GetJsonPatchInputFormatter());
+	config.CacheProfiles.Add( "120secondsDuration", new CacheProfile { Duration = 120 } );
+	
 
 } ).AddXmlDataContractSerializerFormatters()
 .AddCustomCSVFormatter()
 .AddApplicationPart( typeof( CompanyEmployees.Presentation.AssemblyReference ).Assembly );
 builder.Services.AddAutoMapper(typeof(Program));
 builder.Services.AddCustomMediaTypes();
+builder.Services.AddApiVersioning();
+builder.Services.AddMemoryCache();
+builder.Services.ConfigureRateLimitingOptions();
+builder.Services.AddHttpContextAccessor();
+
 
 
 var app = builder.Build();
@@ -72,6 +84,9 @@ app.UseForwardedHeaders( new ForwardedHeadersOptions
 });
 
 app.UseCors( "CorsPolicy" );
+app.UseResponseCaching();
+app.UseHttpCacheHeaders();
+app.UseIpRateLimiting();
 
 app.UseAuthorization();
 

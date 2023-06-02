@@ -8,6 +8,12 @@ namespace Entities.LinkModels
 {
 	public class Link
 	{
+		/*
+		 * The Href property defines the URI 
+		to the action, the Rel property defines the identification of the action 
+		type, and the Method property defines which HTTP method should be 
+		used for that action.
+		 */
 		public string? Href { get; set; }
 
 		public string? Rel { get; set; }
