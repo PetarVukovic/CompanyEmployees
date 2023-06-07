@@ -6,14 +6,23 @@ using Shared.DataTransferObjects;
 namespace CompanyEmployees.Presentation.Controllers
 {
 
-	/*
+	/*Default version
 	 * f you remember, we configured versioning to use 1.0 as a default API 
 		version (opt.AssumeDefaultVersionWhenUnspecified = true;). Therefore, if a client 
 		doesn’t state the required version, our API will use this one:
 	 */
 
+
+	/*v1 version
+	 * With this change, we state that the CompaniesController belongs to group 
+		v1 and the CompaniesV2Controller belongs to group v2. All the other 
+		controllers will be included in both groups because they are not versioned. 
+		Which is what we want.
+
+	 */
 	[Route( "api/[controller]" )]
 	[ApiController]
+	[ApiExplorerSettings(GroupName ="v1")]
 	public class CompaniesController : ControllerBase
 	{
 		private readonly IServiceManager _service;

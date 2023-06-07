@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "0rlrySWmL7N11BJYQYwXSB+yUTXGtC9AtiUeQkfvvP1YCWEA5H2OoRu1EBA89bhJHeVzjTUMcX46T7kPWtF2Zg==",
+  "dgSpecHash": "qKzc+5AEu7Z5YQvc00p3iGeEhl6C0wYgWnAH9QHkt2lvfv28RMC4ENzoU4rblfSGD6fP7JLNVGFvGhv8HLAxZw==",
   "success": true,
   "projectFilePath": "C:\\Users\\pvukovic\\Documents\\.NET KNJIGA\\MyCode\\CompanyEmployees\\Repository\\Repository.csproj",
   "expectedPackageFiles": [
@@ -17,7 +17,8 @@
     "C:\\Users\\pvukovic\\.nuget\\packages\\microsoft.entityframeworkcore.relational\\6.0.10\\microsoft.entityframeworkcore.relational.6.0.10.nupkg.sha512",
     "C:\\Users\\pvukovic\\.nuget\\packages\\microsoft.extensions.caching.abstractions\\7.0.0\\microsoft.extensions.caching.abstractions.7.0.0.nupkg.sha512",
     "C:\\Users\\pvukovic\\.nuget\\packages\\microsoft.extensions.caching.memory\\7.0.0\\microsoft.extensions.caching.memory.7.0.0.nupkg.sha512",
-    "C:\\Users\\pvukovic\\.nuget\\packages\\microsoft.extensions.configuration.abstractions\\6.0.0\\microsoft.extensions.configuration.abstractions.6.0.0.nupkg.sha512",
+    "C:\\Users\\pvukovic\\.nuget\\packages\\microsoft.extensions.configuration.abstractions\\7.0.0\\microsoft.extensions.configuration.abstractions.7.0.0.nupkg.sha512",
+    "C:\\Users\\pvukovic\\.nuget\\packages\\microsoft.extensions.configuration.binder\\7.0.0\\microsoft.extensions.configuration.binder.7.0.0.nupkg.sha512",
     "C:\\Users\\pvukovic\\.nuget\\packages\\microsoft.extensions.dependencyinjection\\7.0.0\\microsoft.extensions.dependencyinjection.7.0.0.nupkg.sha512",
     "C:\\Users\\pvukovic\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\7.0.0\\microsoft.extensions.dependencyinjection.abstractions.7.0.0.nupkg.sha512",
     "C:\\Users\\pvukovic\\.nuget\\packages\\microsoft.extensions.identity.core\\6.0.10\\microsoft.extensions.identity.core.6.0.10.nupkg.sha512",

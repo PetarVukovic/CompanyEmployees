@@ -32,7 +32,8 @@ builder.Services.AddHttpCacheHeaders();
 builder.Services.AddAuthentication();
 builder.Services.ConfigureIdentity();
 builder.Services.ConfigureJWT( builder.Configuration );//And that is it. We can now protect our endpoints.
-
+builder.Services.AddJwtConfigurartion(builder.Configuration);
+builder.Services.AddSwaggerGen();
 
 
 
@@ -96,7 +97,15 @@ app.UseHttpCacheHeaders();
 app.UseIpRateLimiting();
 app.UseAuthentication();
 
+
 app.UseAuthorization();
+app.UseSwagger();
+app.UseSwaggerUI( s =>
+{
+	s.SwaggerEndpoint( "/swagger/v1/swagger.json", "Code Maze API v1" );
+	s.SwaggerEndpoint( "/swagger/v2/swagger.json", "Code Maze API v2" );
+} );
+
 
 /*
 routes are configured with the

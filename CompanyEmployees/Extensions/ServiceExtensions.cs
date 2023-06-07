@@ -1,6 +1,7 @@
 ﻿using AspNetCoreRateLimit;
 using CompanyEmployees.Presentation.Controllers;
 using Contracts;
+using Entities.ConfigurationModels;
 using Entities.Models;
 using LoggerService;
 using Marvin.Cache.Headers;
@@ -14,6 +15,7 @@ using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 using Repository;
 using Service;
 using Service.Contracts;
@@ -188,10 +190,26 @@ namespace CompanyEmployees.Extensions
 				
 				
 		}
+		/*
+		 * One more thing. We didn’t modify anything inside the 
+		ServiceExtensions/ConfigureJWT method. That’s because this 
+		configuration happens during the service registration and not after 
+		services are built. This means that we can’t resolve our required service 
+		here. 
+		 */
 		public static void ConfigureJWT( this IServiceCollection services, IConfiguration
 		configuration )
 		{
-			var jwtSettings = configuration.GetSection( "JwtSettings" );
+			/*
+			 * We create a new instance of the JwtConfiguration class and use the 
+			Bind method that accepts the section name and the instance object as 
+			parameters, to bind to the JwtSettings section directly and map 
+			configuration values to respective properties inside the 
+			JwtConfiguration class. Then, we just use those properties instead of 
+			string keys inside square brackets, to access required values.
+			 */
+			var jwtSettings = new JwtConfiguration();
+			configuration.Bind(jwtSettings.Section,jwtSettings);
 			var secretKey = Environment.GetEnvironmentVariable( "SECRET" );
 			services.AddAuthentication( opt =>
 			{
@@ -200,18 +218,92 @@ namespace CompanyEmployees.Extensions
 			} )
 			.AddJwtBearer( options =>
 			{
+
+				/*
+				 * Ovdje ipak treba napomenuti dvije stvari. Prvi je da imena od
+				ključevi konfiguracijskih podataka i svojstva klase moraju odgovarati. Drugi je
+			da ako proširite konfiguraciju, trebate proširiti i klasu,
+			što može biti malo glomazno, ali bolje je od dobivanja vrijednosti upisivanjem
+			stringa.
+				 */
 				options.TokenValidationParameters = new TokenValidationParameters
 				{
 					ValidateIssuer = true,
 					ValidateAudience = true,
 					ValidateLifetime = true,
 					ValidateIssuerSigningKey = true,
-					ValidIssuer = jwtSettings["validIssuer"],
-					ValidAudience = jwtSettings["validAudience"],
+					ValidIssuer=jwtSettings.ValidIssuer,
+					ValidAudience=jwtSettings.ValidAudience,
 					IssuerSigningKey = new SymmetricSecurityKey( Encoding.UTF8.GetBytes( secretKey ) )
 				};
 			} );
 		}
 
+		public static void AddJwtConfigurartion(this IServiceCollection services, IConfiguration configuration )=>
+			services.Configure<JwtConfiguration>(configuration.GetSection("JwtSettings"));
+
+
+		/*
+		 * We are creating two versions of SwaggerDoc because if you remember, 
+		we have two versions for the Companies controller and we want to 
+		separate them in our documentation.
+		*/
+		public static void ConfigureSwagger( this IServiceCollection services )
+		{
+			services.AddSwaggerGen( s =>
+			{
+				s.SwaggerDoc( "v1", new OpenApiInfo
+				{
+					Title = "Code Maze API",
+					Version = "v1",
+					Description = "CompanyEmployees API by CodeMaze",
+					TermsOfService = new Uri( "https://example.com/terms" ),
+					Contact = new OpenApiContact
+					{
+						Name = "John Doe",
+						Email = "John.Doe@gmail.com",
+						Url = new Uri( "https://twitter.com/johndoe" ),
+					},
+					License = new OpenApiLicense
+					{
+						Name = "CompanyEmployees API LICX",
+						Url = new Uri( "https://example.com/license" ),
+					}
+
+				} );
+
+				s.SwaggerDoc( "v2", new OpenApiInfo { Title = "Code Maze API", Version = "v2" } );
+
+				var xmlFile = $"{typeof( Presentation.AssemblyReference ).Assembly.GetName().Name}.xml";
+				var xmlPath = Path.Combine( AppContext.BaseDirectory, xmlFile );
+				s.IncludeXmlComments( xmlPath );
+
+				s.AddSecurityDefinition( "Bearer", new OpenApiSecurityScheme
+				{
+					In = ParameterLocation.Header,
+					Description = "Place to add JWT with Bearer",
+					Name = "Authorization",
+					Type = SecuritySchemeType.ApiKey,
+					Scheme = "Bearer"
+				} );
+
+				s.AddSecurityRequirement( new OpenApiSecurityRequirement()
+			{
+					{
+						new OpenApiSecurityScheme
+						{
+							Reference = new OpenApiReference
+							{
+								Type = ReferenceType.SecurityScheme,
+								Id = "Bearer"
+							},
+							Name = "Bearer",
+						},
+						new List<string>()
+					}
+			} );
+
+			} );
+		}
 	}
 }
