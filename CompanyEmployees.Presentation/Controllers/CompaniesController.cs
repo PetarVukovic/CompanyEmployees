@@ -1,4 +1,5 @@
 ﻿using Marvin.Cache.Headers;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Service.Contracts;
 using Shared.DataTransferObjects;
@@ -31,6 +32,7 @@ namespace CompanyEmployees.Presentation.Controllers
 
 
 		[HttpGet( Name = "GetCompanies" )]
+		[Authorize(Roles ="Manager")]
 		public async Task<IActionResult> GetCompanies()
 		{
 			var companies = await

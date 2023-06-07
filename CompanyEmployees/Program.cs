@@ -24,10 +24,17 @@ builder.Services.ConfigureServiceManager();
 builder.Services.ConfigureSqlContext( builder.Configuration );
 builder.Services.AddScoped<IDataShaper<EmployeeDto>,DataShaper<EmployeeDto>>();
 builder.Services.AddScoped<ValidateMediaTypeAttribute>();
+builder.Services.AddScoped<ValidationFilterAttribute>();
 builder.Services.AddScoped<IEmployeeLinks, EmployeeLinks>();
 builder.Services.ConfigureVersioning();
 builder.Services.ConfigureResponseCaching();
 builder.Services.AddHttpCacheHeaders();
+builder.Services.AddAuthentication();
+builder.Services.ConfigureIdentity();
+builder.Services.ConfigureJWT( builder.Configuration );//And that is it. We can now protect our endpoints.
+
+
+
 
 
 
@@ -87,6 +94,7 @@ app.UseCors( "CorsPolicy" );
 app.UseResponseCaching();
 app.UseHttpCacheHeaders();
 app.UseIpRateLimiting();
+app.UseAuthentication();
 
 app.UseAuthorization();
 
